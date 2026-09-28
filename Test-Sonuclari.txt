@@ -1,0 +1,35 @@
+GoodbyeDPI Auto v0.3.0 — Doğrulama kaydı
+Yerel C++17 / Dear ImGui x64 uygulaması.
+.NET bileşeni yok; ASLR ve NX etkin. Uygulama kod imzalı değildir.
+Gömülü WinDivert64.sys imzası: Valid.
+EXE içindeki manifest doğrulandı: requestedExecutionLevel = requireAdministrator.
+Masaüstündeki GoodbyeDPI-Turkey 0.2.3rc3 motor, DLL ve sürücü karmaları gömülü kopyalarla eşleşti.
+Gerçek DNS, hizmet, sürücü veya engelli site bağlantısı değiştirilmedi.
+
+30/30 yalıtılmış C++ testi geçti.
+- Boş DNS yedeği Base64 kodlaması Windows 87 hatası vermedi.
+- Yedi GoodbyeDPI-Turkey profili ve sırası birebir doğrulandı.
+- Eksik Windows hizmeti hata kodunun komut hazırlanırken kaybolmaması doğrulandı.
+- Ana profil, alternatif geçişi, hizmet yeniden başlatma doğrulaması ve yedi profil sonunda geri alma sınandı.
+- Kalıcı yedek, kısmi DNS hatası, iptal, sürücü hatası, geri alma hatası ve hizmet sahipliği sınandı.
+- Gömülü goodbyedpi.exe, WinDivert.dll ve WinDivert64.sys SHA-256 değerleri doğrulandı.
+
+9/9 taklit ağ kartı DNS testi geçti.
+- DHCP/statik IPv4 ve IPv6 ayrı ayrı yedeklendi ve geri yüklendi.
+- Cloudflare adresleri, ağ kartı GUID'i, VPN/sanal kart reddi ve DNS önbelleği temizliği sınandı.
+- IPv6 varsayılan rotası olmayan Wi-Fi bağlantısında boş IPv6 DNS nesnesi yok sayıldı.
+
+7/7 çevrimdışı ImGui etkileşim testi geçti.
+- Bağlantı, Hedefler ve İşlem kaydı gezinmesi.
+- Hedef ekleme ve kaldırma.
+- Animasyonlu Kullanım ve bilgiler panelini açma ve kapatma.
+- Yenilenen bağlantı, hedefler, günlük ve kurulu durum ekranları görsel olarak incelendi.
+
+Kaynak ZIP ayrı bir klasöre açılıp yeniden derlendi. Yeniden derlenen kopya da 30/30 C++, 9/9 DNS ve 7/7 ImGui kontrolünü geçti.
+
+Salt okunur gerçek sistem kontrolü:
+- Boş yedek kodlama yolu Windows 87 olmadan PowerShell ağ kartı seçimine ulaştı.
+- Test ortamında canlı IPv4 varsayılan rotası bulunmadığı için etkin ağ kartı yedeği atlandı.
+- Bu kontrolde DNS, hizmet veya sürücü değişikliği yapılmadı.
+
+Gerçek operatör hattındaki kurulum ve hedef erişimi kullanıcı cihazında saha testi gerektirir.

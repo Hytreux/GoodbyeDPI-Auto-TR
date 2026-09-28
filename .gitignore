@@ -1,0 +1,16 @@
+build/
+dist/
+ci-test-dist/
+.vs/
+*.obj
+*.res
+*.pdb
+*.ilk
+*.log
+self-test.txt
+github-self-test.txt
+snapshot-test.txt
+ui-test.txt
+preview.png
+Thumbs.db
+.DS_Store

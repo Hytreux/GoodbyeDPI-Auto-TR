@@ -1,0 +1,12 @@
+*.png binary
+*.ico binary
+*.exe binary
+*.dll binary
+*.sys binary
+*.zip binary
+*.cpp text
+*.hpp text
+*.ps1 text
+*.md text
+*.txt text
+*.yml text

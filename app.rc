@@ -1,0 +1,31 @@
+#include <windows.h>
+1 ICON "assets/app.ico"
+1 RT_MANIFEST "app.manifest"
+100 RCDATA "assets/goodbyedpi.exe"
+101 RCDATA "assets/WinDivert.dll"
+102 RCDATA "assets/WinDivert64.sys"
+103 RCDATA "assets/Dns.ps1"
+110 RCDATA "licenses/LICENSE-goodbyedpi.txt"
+111 RCDATA "licenses/LICENSE-windivert.txt"
+112 RCDATA "licenses/LICENSE-getline.txt"
+113 RCDATA "licenses/LICENSE-uthash.txt"
+1 VERSIONINFO
+FILEVERSION 0,3,0,0
+PRODUCTVERSION 0,3,0,0
+FILETYPE VFT_APP
+BEGIN
+ BLOCK "StringFileInfo"
+ BEGIN
+  BLOCK "040904B0"
+  BEGIN
+   VALUE "FileDescription", "GoodbyeDPI Auto - Native C++ application\0"
+   VALUE "FileVersion", "0.3.0\0"
+   VALUE "ProductName", "GoodbyeDPI Auto\0"
+   VALUE "ProductVersion", "0.3.0\0"
+  END
+ END
+ BLOCK "VarFileInfo"
+ BEGIN
+  VALUE "Translation", 0x409, 1200
+ END
+END

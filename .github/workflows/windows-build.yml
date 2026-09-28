@@ -1,0 +1,56 @@
+name: Windows build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    steps:
+      - name: Kaynakları al
+        uses: actions/checkout@v4
+
+      - name: Test sürümünü derle
+        shell: pwsh
+        run: |
+          $manifest = '.\app.manifest'
+          $backup = '.\app.manifest.release'
+          Copy-Item $manifest $backup
+          try {
+            $text = (Get-Content -Raw $manifest).Replace('level="requireAdministrator"', 'level="asInvoker"')
+            [IO.File]::WriteAllText((Resolve-Path $manifest), $text, [Text.UTF8Encoding]::new($false))
+            .\build.ps1 -OutputDirectory .\ci-test-dist
+          } finally {
+            Copy-Item $backup $manifest -Force
+            Remove-Item $backup -Force
+          }
+
+      - name: Yalıtılmış C++ testlerini çalıştır
+        shell: pwsh
+        run: |
+          $process = Start-Process .\ci-test-dist\GoodbyeDPI-Auto.exe -ArgumentList '--self-test self-test.txt' -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw "Self-test başarısız: $($process.ExitCode)" }
+          Get-Content .\self-test.txt
+          if (-not (Select-String -Path .\self-test.txt -Pattern '30/30')) { throw '30/30 sonucu bulunamadı.' }
+
+      - name: DNS yardımcı testlerini çalıştır
+        shell: pwsh
+        run: |
+          powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\assets\Test-Dns.ps1
+          if ($LASTEXITCODE -ne 0) { throw "DNS testleri başarısız: $LASTEXITCODE" }
+
+      - name: Yönetici izinli x64 sürümünü derle
+        shell: pwsh
+        run: .\build.ps1 -OutputDirectory .\dist
+
+      - name: Derleme çıktısını sakla
+        uses: actions/upload-artifact@v4
+        with:
+          name: GoodbyeDPI-Auto-windows-x64
+          path: dist/GoodbyeDPI-Auto.exe
+          if-no-files-found: error
