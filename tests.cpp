@@ -67,7 +67,7 @@ int self_test(const std::filesystem::path& output){
     test("Embedded WinDivert library fingerprint",[]{require(sha256(resource(101))=="6110BFA44667405179C3E15E12AF1B62037E447ED59B054B19042032995E6C7E");});
     test("Embedded signed driver fingerprint",[]{require(sha256(resource(102))=="E69B5BA3F0CD6CFB2983E442636E7F0B342B61B15264B0328317D4559C82CF50");});
     test("Native child process execution is bounded",[]{wchar_t dir[MAX_PATH];GetSystemDirectoryW(dir,MAX_PATH);auto r=run((std::filesystem::path(dir)/L"cmd.exe").wstring(),L"/d /c exit 7",4000);require(r.code==7);});
-    int failed=0;std::ostringstream out;out<<"GoodbyeDPI Auto v0.3.0 — C++ isolated tests\nNo DNS/service/driver changes or website requests.\n";
+    int failed=0;std::ostringstream out;out<<"GoodbyeDPI Auto v0.3.1 — C++ isolated tests\nNo DNS/service/driver changes or website requests.\n";
     for(const auto& t:tests){try{t.second();out<<"PASS: "<<t.first<<'\n';}catch(const std::exception& ex){++failed;out<<"FAIL: "<<t.first<<" — "<<ex.what()<<'\n';}}
     out<<(tests.size()-failed)<<"/"<<tests.size()<<" passed.\n";export_text(output,out.str());return failed?1:0;
 }

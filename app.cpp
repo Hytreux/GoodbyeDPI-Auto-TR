@@ -72,7 +72,7 @@ public:
         }catch(const std::exception& ex){std::lock_guard<std::mutex> lock(mutex);data.recovery=true;data.stage=Stage::Error;data.note=ex.what();}
     }
     void cancel(){cancelled=true;log("İptal istendi. Ayarlar geri alınacak.");}
-    std::string report(){auto copy=get();std::string out="GoodbyeDPI Auto v0.3.0 — C++ / Dear ImGui\r\nHTTPS erişim testi; tam uygulama işlev testi değildir.\r\n\r\n";for(auto& line:copy.logs)out+=line.time+"  "+line.text+"\r\n";return out;}
+    std::string report(){auto copy=get();std::string out="GoodbyeDPI Auto v0.3.1 — C++ / Dear ImGui\r\nTuğrul tarafından geliştirildi.\r\nHTTPS erişim testi; tam uygulama işlev testi değildir.\r\n\r\n";for(auto& line:copy.logs)out+=line.time+"  "+line.text+"\r\n";return out;}
     void start(bool restore){
         auto initial=get();if(initial.busy||preview)return;
         if(!is_admin()){
@@ -156,7 +156,7 @@ static void orbit(float x,float y,const Model& m){
 static void sidebar(const Model& m){
     draw->AddRectFilled(point(0,0),point(210,760),side);draw->AddCircleFilled(point(50,28),105*scale,IM_COL32(51,181,148,11),72);line(210,0,210,760,IM_COL32(38,65,73,255));
     draw->AddRectFilled(point(22,56),point(64,98),mint,13*scale);draw->AddCircleFilled(point(41,75),24*scale,IM_COL32(255,255,255,15),40);icon(32,66,0,IM_COL32(8,48,37,255),22);
-    text(76,55,"goodbye",brand);text(77,84,"DPI · AUTO",fontSmall,muted);
+    text(76,55,"goodbye",brand);text(77,84,"DPI · AUTO",fontSmall,muted);text(77,102,"BY TUĞRUL",fontSmall,fade(mint,.82f));
     label(24,144,"ANA MENÜ");
     const char* names[]={"Bağlantı","Hedefler","İşlem kaydı"};
     const float target_y=180.f+tab*54.f;nav_indicator_y+=(target_y-nav_indicator_y)*std::min(1.f,ImGui::GetIO().DeltaTime*13.f);
@@ -263,7 +263,7 @@ static void help(){
     draw->AddRectFilled(point(x,y),point(x+w,y+h),fade(IM_COL32(18,27,33,255),a),18*scale);
     draw->AddRect(point(x,y),point(x+w,y+h),fade(IM_COL32(49,69,76,255),a),18*scale,0,scale);
     draw->AddRectFilled(point(x+28,y+26),point(x+151,y+51),fade(IM_COL32(32,66,56,255),a),7*scale);
-    text(x+40,y+31,"v0.3.0  ·  WINDOWS x64",fontSmall,fade(mint,a));
+    text(x+40,y+31,"v0.3.1  ·  WINDOWS x64",fontSmall,fade(mint,a));
     text(x+28,y+70,"Kurulum nasıl çalışır?",title,fade(ink,a));
     text(x+28,y+108,"Tek uygulama, bağlantına göre seçilen kalıcı Türkiye profili.",body,fade(muted,a));
     const auto step=[&](float sy,const char* number,const char* heading,const char* detail,int glyph){
@@ -280,7 +280,7 @@ static void help(){
     icon(x+48,y+427,5,fade(mint,a),22);text(x+82,y+423,"Güvenli geri alma",medium,fade(ink,a));text(x+48,y+461,"İptal veya hatada DNS ve hizmet değişiklikleri geri alınır. Tamamlanmazsa yedek korunur.",fontSmall,fade(muted,a),252);
     draw->AddRectFilled(point(x+341,y+405),point(x+w-28,y+518),fade(IM_COL32(25,34,41,255),a),12*scale);draw->AddRect(point(x+341,y+405),point(x+w-28,y+518),fade(border,a),12*scale,0,scale);
     icon(x+361,y+427,3,fade(warn,a),22);text(x+395,y+423,"Testin kapsamı",medium,fade(ink,a));text(x+361,y+461,"HTTPS erişimi doğrulanır. Discord ses ve görüntü gibi uygulama içi özellikler ayrıca sınanmalıdır.",fontSmall,fade(muted,a),252);
-    line(x+28,y+545,x+w-28,y+545,fade(border,a));text(x+28,y+566,"Kaynaklar ve lisanslar kaynak paketinde yer alır.",fontSmall,fade(dim,a));
+    line(x+28,y+545,x+w-28,y+545,fade(border,a));text(x+28,y+558,"GoodbyeDPI Auto",fontSmall,fade(ink,a));text(x+28,y+577,"Tuğrul tarafından geliştirildi  ·  MIT Lisansı",fontSmall,fade(mint,a));
     bool close=hit("help-close",x+w-55,y+24,32,32);bool close_hovered=ImGui::IsItemHovered();draw->AddCircleFilled(point(x+w-39,y+40),16*scale,fade(close_hovered?IM_COL32(48,67,73,255):IM_COL32(29,43,49,255),a),32);text(x+w-44,y+28,"×",medium,fade(close_hovered?ink:muted,a));
     bool done=hit("help-done",x+w-145,y+558,117,36);bool done_hovered=ImGui::IsItemHovered();draw->AddRectFilled(point(x+w-145,y+558),point(x+w-28,y+594),fade(done_hovered?IM_COL32(138,243,211,255):mint,a),8*scale);text(x+w-113,y+567,"Anladım",body,fade(IM_COL32(9,39,30,255),a));
     if(close||done)help_open=false;
@@ -294,7 +294,7 @@ static void draw_app(){
     auto m=controller.get();const bool help_blocks=help_open||help_anim>.012f;ImGui::PushStyleVar(ImGuiStyleVar_DisabledAlpha,1.f);ImGui::BeginDisabled(help_blocks);
     sidebar(m);header(m);if(tab==0)home(m);else if(tab==1)targets_page(m);else logs_page(m);
     if(tab==0&&m.note.empty())text(238,722,"Test raporları cihazında kalır.",fontSmall,dim);
-    text(920,742,"v0.3.0 · Windows x64",fontSmall,dim);
+    text(800,742,"GoodbyeDPI Auto by Tuğrul  ·  v0.3.1",fontSmall,dim);
     ImGui::SetCursorScreenPos({io.DisplaySize.x-88,8});ImGui::PushStyleColor(ImGuiCol_Button,{0,0,0,0});if(ImGui::Button("—##min",{34,23}))ShowWindow(window_handle,SW_MINIMIZE);ImGui::SameLine();if(ImGui::Button("×##close",{34,23})){if(m.busy)controller.cancel();else want_close=true;}ImGui::PopStyleColor();
     ImGui::EndDisabled();ImGui::PopStyleVar();help();ImGui::PopStyleVar(3);ImGui::End();ImGui::PopStyleVar(2);
 }

@@ -1,4 +1,5 @@
 #include <windows.h>
+#pragma code_page(65001)
 1 ICON "assets/app.ico"
 1 RT_MANIFEST "app.manifest"
 100 RCDATA "assets/goodbyedpi.exe"
@@ -10,18 +11,30 @@
 112 RCDATA "licenses/LICENSE-getline.txt"
 113 RCDATA "licenses/LICENSE-uthash.txt"
 1 VERSIONINFO
-FILEVERSION 0,3,0,0
-PRODUCTVERSION 0,3,0,0
+FILEVERSION 0,3,1,0
+PRODUCTVERSION 0,3,1,0
+FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+FILEFLAGS 0x1L
+#else
+FILEFLAGS 0x0L
+#endif
+FILEOS 0x40004L
 FILETYPE VFT_APP
+FILESUBTYPE 0x0L
 BEGIN
  BLOCK "StringFileInfo"
  BEGIN
   BLOCK "040904B0"
   BEGIN
-   VALUE "FileDescription", "GoodbyeDPI Auto - Native C++ application\0"
-   VALUE "FileVersion", "0.3.0\0"
+   VALUE "CompanyName", "Tuğrul / GoodbyeDPI Auto Project\0"
+   VALUE "FileDescription", "GoodbyeDPI Auto - Windows bağlantı yapılandırıcısı\0"
+   VALUE "FileVersion", "0.3.1.0\0"
+   VALUE "InternalName", "GoodbyeDPI-Auto.exe\0"
+   VALUE "LegalCopyright", "Copyright (C) 2026 Tuğrul. MIT License.\0"
+   VALUE "OriginalFilename", "GoodbyeDPI-Auto.exe\0"
    VALUE "ProductName", "GoodbyeDPI Auto\0"
-   VALUE "ProductVersion", "0.3.0\0"
+   VALUE "ProductVersion", "0.3.1.0\0"
   END
  END
  BLOCK "VarFileInfo"

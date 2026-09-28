@@ -1,4 +1,4 @@
-# GoodbyeDPI Auto v0.3.0
+# GoodbyeDPI Auto v0.3.1
 
 GoodbyeDPI Auto, Windows 10/11 x64 için C++ ve Dear ImGui ile hazırlanmış tek dosyalık bir bağlantı ayarlayıcısıdır. Etkin ağ bağlantısının DNS ayarlarını yedekler, Cloudflare DNS'i uygular, seçilen sitelerde HTTPS erişimini sınar ve çalışan GoodbyeDPI profilini Windows hizmeti olarak kaydeder.
 

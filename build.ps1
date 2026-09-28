@@ -21,7 +21,7 @@ try {
  if ($LASTEXITCODE -ne 0) { throw 'Kaynak derlemesi basarisiz.' }
  $sources=@('app.cpp','platform.cpp','tests.cpp',"$imgui\imgui.cpp","$imgui\imgui_draw.cpp","$imgui\imgui_tables.cpp","$imgui\imgui_widgets.cpp","$imgui\backends\imgui_impl_win32.cpp","$imgui\backends\imgui_impl_dx11.cpp")
  $exe=Join-Path $OutputDirectory 'GoodbyeDPI-Auto.exe'
- & cl.exe /nologo /std:c++17 /utf-8 /O2 /MT /EHsc /W4 /Brepro /DUNICODE /D_UNICODE ('/I' + $imgui) ('/Fo' + $build + '\') ('/Fe' + $exe) @sources (Join-Path $build 'app.res') /link /Brepro /SUBSYSTEM:WINDOWS /MANIFEST:NO /DYNAMICBASE /NXCOMPAT d3d11.lib dxgi.lib d3dcompiler.lib dwmapi.lib user32.lib gdi32.lib advapi32.lib shell32.lib ole32.lib shlwapi.lib winhttp.lib dnsapi.lib crypt32.lib comdlg32.lib windowscodecs.lib
+ & cl.exe /nologo /std:c++17 /utf-8 /O2 /MT /EHsc /W4 /Brepro /Gy /Gw /guard:cf /DUNICODE /D_UNICODE ('/I' + $imgui) ('/Fo' + $build + '\') ('/Fe' + $exe) @sources (Join-Path $build 'app.res') /link /Brepro /OPT:REF /OPT:ICF /HIGHENTROPYVA /guard:cf /SUBSYSTEM:WINDOWS /MANIFEST:NO /DYNAMICBASE /NXCOMPAT d3d11.lib dxgi.lib d3dcompiler.lib dwmapi.lib user32.lib gdi32.lib advapi32.lib shell32.lib ole32.lib shlwapi.lib winhttp.lib dnsapi.lib crypt32.lib comdlg32.lib windowscodecs.lib
  if ($LASTEXITCODE -ne 0) { throw 'C++ derlemesi basarisiz.' }
  Write-Output $exe
 } finally { Pop-Location }

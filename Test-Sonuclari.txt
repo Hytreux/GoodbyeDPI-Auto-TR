@@ -1,6 +1,6 @@
-GoodbyeDPI Auto v0.3.0 — Doğrulama kaydı
+GoodbyeDPI Auto v0.3.1 — Doğrulama kaydı
 Yerel C++17 / Dear ImGui x64 uygulaması.
-.NET bileşeni yok; ASLR ve NX etkin. Uygulama kod imzalı değildir.
+.NET bileşeni yok; ASLR, yüksek entropili ASLR, NX ve Control Flow Guard etkin. Uygulama kod imzalı değildir.
 Gömülü WinDivert64.sys imzası: Valid.
 EXE içindeki manifest doğrulandı: requestedExecutionLevel = requireAdministrator.
 Masaüstündeki GoodbyeDPI-Turkey 0.2.3rc3 motor, DLL ve sürücü karmaları gömülü kopyalarla eşleşti.

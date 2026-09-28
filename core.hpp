@@ -14,7 +14,6 @@ struct Cancelled : std::runtime_error { Cancelled() : runtime_error("İşlem ipt
 inline void cancellation(const std::atomic<bool>& flag) { if (flag.load()) throw Cancelled(); }
 struct Profile { std::string name, args; };
 inline const std::vector<Profile> profiles = {
-    // Exact persistent-service order from GoodbyeDPI-Turkey 0.2.3rc3.
     {"Türkiye ana profil", "-5 --set-ttl 5 --dns-addr 77.88.8.8 --dns-port 1253 --dnsv6-addr 2a02:6b8::feed:0ff --dnsv6-port 1253"},
     {"Alternatif 1 · TTL 3", "--set-ttl 3"},
     {"Alternatif 2 · Modern", "-5"},
@@ -91,7 +90,7 @@ public:
         p.preflight(); cancellation(cancel);
         e.stage(Stage::Prepare,"Paket ve bağlantı hazırlanıyor",0,0); p.prepare();
         Json state = {{"Schema",1},{"Status","Pending"},{"Dns",p.capture()},{"Targets",hosts},{"Profile",""}};
-        p.save(state); // Durable backup must precede the first network change.
+        p.save(state);
         try {
             cancellation(cancel); e.stage(Stage::Dns,"Cloudflare DNS ayarlanıyor",0,0); p.apply(state["Dns"]);
             e.log("DNS yedeği kaydedildi. Cloudflare uygulandı.");

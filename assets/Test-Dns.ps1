@@ -1,4 +1,3 @@
-# All networking cmdlets are shadowed by in-memory mocks. No host configuration is read or changed.
 $ErrorActionPreference = 'Stop'
 $script:guid = '{11111111-1111-1111-1111-111111111111}'
 $script:adapterIndex = 4
@@ -29,7 +28,6 @@ function Set-DnsClientServerAddress {
 function Clear-DnsClientCache { $script:flushes++ }
 function Assert($condition, [string]$message) { if (-not $condition) { throw $message } }
 $dnsSource = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'Dns.ps1') -Raw
-# Replace process exit solely in the test copy, making error paths catchable by this harness.
 $testSource = $dnsSource.Replace('[Console]::Error.WriteLine($_.Exception.Message); exit 1', 'throw')
 $runner = [scriptblock]::Create($testSource)
 $snapshot = (& $runner -Action Snapshot) | ConvertFrom-Json

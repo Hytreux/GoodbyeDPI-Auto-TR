@@ -1,5 +1,12 @@
 # Değişiklik günlüğü
 
+## 0.3.1 — 2026-09-28
+
+- Uygulama arayüzüne görünür **GoodbyeDPI Auto by Tuğrul** geliştirici kredisi eklendi.
+- Dosya sürümü, uygulama manifesti ve günlük başlığı 0.3.1 olarak güncellendi.
+- Windows ikili dosya metadatası genişletildi.
+- Control Flow Guard ve yüksek entropili ASLR derleme korumaları etkinleştirildi.
+
 ## 0.3.0 — 2026-09-28
 
 - Bağlantı, hedefler, işlem kaydı ve kullanım paneli baştan tasarlandı.

@@ -32,9 +32,6 @@ try {
         $guid = ([guid]$adapter.InterfaceGuid).ToString('B')
         $v4 = @(Get-StaticDns $guid 'Tcpip')
         $v6 = @(Get-StaticDns $guid 'Tcpip6')
-        # Windows can expose an empty IPv6 DNS object even when this adapter has
-        # no usable IPv6 default route. Only configure IPv6 DNS when IPv6 can
-        # actually carry internet traffic on the selected adapter.
         $manageV6 = ($v6routes.Count -gt 0) -and (@(Get-DnsClientServerAddress -InterfaceIndex $adapter.ifIndex -AddressFamily IPv6 -ErrorAction SilentlyContinue).Count -gt 0)
         [pscustomobject]@{
             AdapterGuid = $guid; Index = [int]$adapter.ifIndex; Name = [string]$adapter.Name
@@ -51,7 +48,6 @@ try {
             try {
                 $client = Get-DnsClientServerAddress -InterfaceIndex $adapter[0].ifIndex -AddressFamily $family
                 if ($Action -eq 'Apply') {
-                    # IPv6 is never disabled. Its resolver configuration is backed up independently.
                     $servers = if ($family -eq 'IPv4') { @('1.1.1.1','1.0.0.1') } else { @('2606:4700:4700::1111','2606:4700:4700::1001') }
                     $client | Set-DnsClientServerAddress -ServerAddresses $servers -ErrorAction Stop
                     $actual = @(Get-DnsClientServerAddress -InterfaceIndex $adapter[0].ifIndex -AddressFamily $family | Select-Object -ExpandProperty ServerAddresses)

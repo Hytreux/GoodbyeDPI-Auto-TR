@@ -134,7 +134,7 @@ Derleme betiği MSVC'yi otomatik bulur ve `dist\GoodbyeDPI-Auto.exe` dosyasını
 <details>
 <summary><strong>Doğrulama kapsamını göster</strong></summary>
 
-### v0.3.0 sonuçları
+### v0.3.1 sonuçları
 
 - **30/30** yalıtılmış C++ mantık, paket ve süreç testi
 - **9/9** taklit ağ kartı DNS testi

@@ -47,8 +47,6 @@ std::wstring quote(const std::wstring& input) {
     out.append(slashes*2,L'\\');out+=L'"';return out;
 }
 std::string base64(const void* data,size_t size) {
-    // Snapshot does not need a DNS backup payload. Windows' encoder rejects a
-    // zero-byte input with ERROR_INVALID_PARAMETER, so represent it directly.
     if(size==0)return {};
     DWORD n=0;CryptBinaryToStringA(static_cast<const BYTE*>(data),static_cast<DWORD>(size),CRYPT_STRING_BASE64|CRYPT_STRING_NOCRLF,nullptr,&n);
     std::string result(n,0);if(!CryptBinaryToStringA(static_cast<const BYTE*>(data),static_cast<DWORD>(size),CRYPT_STRING_BASE64|CRYPT_STRING_NOCRLF,result.data(),&n))fail("Kodlama");
@@ -223,7 +221,7 @@ bool WindowsPlatform::probe(const std::string& host,bool ipv6,const std::atomic<
     const std::string family=ipv6?"IPv6":"IPv4";
     try{
         for(int hop=0;hop<6;++hop){
-            auto args=L"-q --silent --show-error --http1.1 --noproxy \"*\" --proto =https --connect-timeout 5 --max-time 9 "+std::wstring(ipv6?L"--ipv6 ":L"--ipv4 ")+L"--header \"Cache-Control: no-cache\" --user-agent \"Mozilla/5.0 GoodbyeDPIAuto/0.3.0\" --dump-header - --output NUL "+(get?L"--request GET --range 0-0 --max-filesize 16384 ":L"--head ")+quote(wide(url));
+            auto args=L"-q --silent --show-error --http1.1 --noproxy \"*\" --proto =https --connect-timeout 5 --max-time 9 "+std::wstring(ipv6?L"--ipv6 ":L"--ipv4 ")+L"--header \"Cache-Control: no-cache\" --user-agent \"Mozilla/5.0 GoodbyeDPIAuto/0.3.1\" --dump-header - --output NUL "+(get?L"--request GET --range 0-0 --max-filesize 16384 ":L"--head ")+quote(wide(url));
             auto result=run(system_path(L"curl.exe").wstring(),args,13000,&cancel);
             std::regex status(R"((?:^|\n)HTTP/\S+\s+(\d{3}))");int code=0;
             for(auto it=std::sregex_iterator(result.output.begin(),result.output.end(),status);it!=std::sregex_iterator();++it)code=std::stoi((*it)[1]);
